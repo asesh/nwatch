@@ -24,22 +24,16 @@ module.exports = {
 
     const numberOfInvitedUsers = (2 * numberOfWorkers) / 100 // 2% users should be invited
 
-    const endpoint = "https://fishtail.cloudfactorypre.app/core/people"
+    const endpoint = "https://fishtail.cloudfactorypre.app/auth"
 
-    // request.post(
-    //   endpoint,
-    //   { json: { key: 'value' } },
-    //   function (error, response, body) {
-    //       if (!error && response.statusCode == 200) {
-    //           console.log(body);
-    //       }
-    //   }
-    // );
+    const defaultTimeout = 60000
+
     browser
       .url(endpoint)
-      .expect.element('#main').to.be.present()
+      .waitForElementVisible('.btn-primary.m-5', defaultTimeout)
+      //.waitForElementPresent({selector: ".btn btn-primary p-20 m-5 float-right", time: 60000})
       .click(".btn-primary")
-      .pause(100000)
+      .pause(defaultTimeout)
       // ...
       //.end();
       //.pause(10000);
@@ -47,9 +41,6 @@ module.exports = {
 
   after(browser, done) {
     browser.end(() => {
-      console.info('*--*--*--*--*--*--*--*--*--*--*--*--*');
-      console.info('*-- Clossing session... Good bye! --*');
-      console.info('*--*--*--*--*--*--*--*--*--*--*--*--*');
       done();
     });
   }
